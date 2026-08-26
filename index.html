@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SIEXTHER — STORE</title>
+<link rel="icon" type="image/jpeg" href="favicon.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118cc;
+    --surface-solid: #14141e;
+    --border: #2a2a44;
+    --border-active: #4682FF;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --accent: #4682FF;
+    --accent-dim: #4682FF20;
+    --accent-glow: #4682FF55;
+    --danger: #f76a6a;
+    --success: #6af7a8;
+    --gold: #ffcf6a;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --display: 'Orbitron', sans-serif;
+    --ios: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  }
+
+  body {
+    background: rgb(20, 20, 30);
+    background-image:
+      radial-gradient(circle at 15% 0%, #4682ff14 0%, transparent 45%),
+      radial-gradient(circle at 85% 100%, #4682ff10 0%, transparent 45%);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 18px 80px;
+  }
+
+  .wrap { width: 100%; max-width: 520px; }
+
+  /* ---- logo (kept identical to login) ---- */
+  .logo { text-align: center; margin-bottom: 34px; }
+  .logo-text {
+    font-family: var(--display);
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    background: linear-gradient(90deg, #ffffff 0%, var(--accent) 30%, var(--accent) 60%, #ffffff 100%);
+    background-size: 300% 100%;
+    background-position: 200% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 18px var(--accent-glow));
+    animation: titleSweep 4s ease-in-out infinite alternate;
+  }
+  @keyframes titleSweep { 0% { background-position: 200% 0; } 100% { background-position: -100% 0; } }
+  .logo-sub {
+    font-size: 11px; color: var(--muted); margin-top: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--mono);
+  }
+
+  /* ---- section headers ---- */
+  .section-head {
+    display: flex; align-items: center; gap: 10px;
+    margin: 30px 0 14px;
+  }
+  .section-head::before, .section-head::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .section-head span {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    color: var(--accent); white-space: nowrap; text-transform: uppercase;
+  }
+
+  /* ---- package cards ---- */
+  .pkg-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  .pkg-card {
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    cursor: pointer;
+    transition: border-color .18s, box-shadow .18s, background .18s;
+    position: relative;
+  }
+  .pkg-card:hover { border-color: #4682ff70; }
+  .pkg-card.active { border-color: var(--border-active); }
+
+  .pkg-radio {
+    position: absolute; top: 14px; right: 16px;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid var(--border); flex-shrink: 0;
+  }
+  .pkg-card.active .pkg-radio {
+    border-color: var(--accent);
+    background: radial-gradient(circle, var(--accent) 0 40%, transparent 44%);
+  }
+  .pkg-card { padding-right: 44px; }
+
+  .pkg-info { display: flex; flex-direction: column; gap: 6px; }
+  .pkg-specs { display: flex; gap: 14px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .pkg-specs b { color: var(--text); font-weight: 600; }
+  .pkg-status {
+    display: inline-block; width: fit-content;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em;
+    color: var(--gold); border: 1px solid #ffcf6a40; background: #ffcf6a12;
+    padding: 3px 8px; border-radius: 20px; text-transform: uppercase;
+  }
+  .pkg-price {
+    font-family: var(--ios); font-weight: 700; font-size: 21px; letter-spacing: -0.01em;
+    color: #fff; white-space: nowrap;
+  }
+
+  /* ---- top notification toast ---- */
+  .toast {
+    position: fixed; top: 18px; left: 50%;
+    transform: translate(-50%, -140%);
+    max-width: 460px; width: calc(100% - 36px);
+    background: var(--surface-solid);
+    border: 1px solid var(--border-active);
+    box-shadow: 0 10px 34px rgba(0,0,0,.5), 0 0 0 1px #4682ff30;
+    border-radius: 12px;
+    padding: 13px 16px;
+    display: flex; align-items: center; gap: 10px;
+    z-index: 60;
+    transition: transform .28s ease;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+  .toast-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent-dim); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .toast-text { font-size: 12.5px; line-height: 1.4; }
+  .toast-text b { color: #fff; }
+
+  /* ---- payment methods ---- */
+  .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .pay-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 8px 12px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    cursor: pointer;
+    font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--text);
+    transition: border-color .18s, transform .1s;
+  }
+  .pay-btn:hover { border-color: #4682ff70; }
+  .pay-btn:active { transform: scale(.97); }
+  .pay-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .pay-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; background: #ffffff10; border: 1px solid var(--border);
+  }
+  .pay-icon img { width: 100%; height: 100%; object-fit: cover; }
+  .icon-qris { background: #0a0a12; padding: 6px; }
+  .icon-qris img { object-fit: contain; }
+
+  .hint {
+    text-align: center; font-family: var(--mono); font-size: 11px;
+    color: var(--muted); margin-top: 10px; letter-spacing: .02em;
+  }
+
+  /* ---- proof-of-payment block ---- */
+  .proof-box {
+    margin-top: 30px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: 20px;
+    text-align: center;
+  }
+  .proof-box p {
+    font-size: 12.5px; line-height: 1.65; color: var(--muted);
+    letter-spacing: .01em; margin-bottom: 16px;
+  }
+  .btn { width: 100%; padding: 13px; border: none; border-radius: 10px; font-family: var(--sans); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: opacity .2s, transform .1s; letter-spacing: .02em; }
+  .btn:active { transform: scale(.98); }
+  .btn-wa {
+    background: linear-gradient(135deg,#25d366,#1aa851);
+    color: #06210f;
+    box-shadow: 0 4px 22px #25d36655;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none;
+  }
+  .btn-wa:hover { opacity: .92; }
+
+  .top-link { text-align: center; font-size: 12px; color: var(--muted); margin-top: 24px; }
+  .top-link a { color: var(--accent); text-decoration: none; opacity: .9; }
+
+  /* ---- modal ---- */
+  .modal-overlay {
+    position: fixed; inset: 0; background: #05050add;
+    backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px; z-index: 50;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 380px;
+    background: var(--surface-solid);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    animation: modalIn .18s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .modal-title { font-family: var(--display); font-size: 15px; letter-spacing: .06em; color: var(--accent); }
+  .modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; }
+
+  .modal-amount { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 4px; letter-spacing: .05em; text-transform: uppercase; }
+  .modal-amount b { display: block; font-family: var(--ios); font-size: 24px; font-weight: 700; color: #fff; margin-top: 4px; letter-spacing: -0.01em; }
+
+  .pay-detail {
+    margin-top: 18px;
+    background: rgba(10,10,15,.6);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .pay-detail div span { display: block; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+  .pay-detail div b { font-family: var(--mono); font-size: 15px; letter-spacing: .03em; }
+  .copy-btn {
+    flex-shrink: 0; background: var(--accent-dim); border: 1px solid #4682ff40;
+    color: var(--accent); font-family: var(--mono); font-size: 11px;
+    padding: 7px 12px; border-radius: 8px; cursor: pointer; transition: background .15s;
+  }
+  .copy-btn:hover { background: #4682ff35; }
+
+  .qris-img-wrap { margin-top: 16px; text-align: center; }
+  .qris-img-wrap img { width: 100%; max-width: 260px; border-radius: 10px; border: 1px solid var(--border); }
+
+  .modal-note { margin-top: 16px; font-size: 11.5px; color: var(--muted); line-height: 1.6; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- top notification -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span class="toast-text" id="toast-text">Paket dipilih</span>
+</div>
+
+<div class="wrap">
+  <div class="logo">
+    <div class="logo-mark"><span class="logo-text">SIEXTHER</span></div>
+    <div class="logo-sub">VIP PURCHASE</div>
+  </div>
+
+  <!-- PAYMENT 1 -->
+  <div class="section-head"><span>PRICE LIST</span></div>
+  <div class="pkg-grid" data-group="1">
+    <div class="pkg-card" data-usn="1" data-change="1" data-price="25000" data-status="10 DAYS" data-name="USN Max 1 · Change Max 1">
+      <div class="pkg-radio"></div>
+      <div class="pkg-info">
+        <span class="pkg-specs"><span>USN MAX <b>1</b></span><span>CHANGE MAX <b>1</b></span></span>
+        <span class="pkg-status">10 Days</span>
+      </div>
+      <div class="pkg-price">25K</div>
+    </div>
+
+    <div class="pkg-card" data-usn="2" data-change="3" data-price="50000" data-status="30 DAYS" data-name="USN Max 2 · Change 3">
+      <div class="pkg-radio"></div>
+      <div class="pkg-info">
+        <span class="pkg-specs"><span>USN MAX <b>2</b></span><span>CHANGE <b>3</b></span></span>
+        <span class="pkg-status">30 Days</span>
+      </div>
+      <div class="pkg-price">50K</div>
+    </div>
+  </div>
+
+  <div class="pkg-grid" data-group="2" style="margin-top: 12px;">
+    <div class="pkg-card" data-usn="8" data-change="10" data-price="100000" data-status="LIFETIME" data-name="USN Max 8 · Change 10">
+      <div class="pkg-radio"></div>
+      <div class="pkg-info">
+        <span class="pkg-specs"><span>USN MAX <b>8</b></span><span>CHANGE <b>10</b></span></span>
+        <span class="pkg-status">Lifetime</span>
+      </div>
+      <div class="pkg-price">100K</div>
+    </div>
+  </div>
+
+  <!-- payment methods -->
+  <div class="section-head"><span>Metode Pembayaran</span></div>
+  <div class="pay-grid">
+    <button class="pay-btn" id="btn-dana" disabled onclick="openPay('dana')">
+      <span class="pay-icon"><img src="icon-dana.png" alt="DANA" /></span> DANA
+    </button>
+    <button class="pay-btn" id="btn-gopay" disabled onclick="openPay('gopay')">
+      <span class="pay-icon"><img src="icon-gopay.png" alt="GOPAY" /></span> GOPAY
+    </button>
+    <button class="pay-btn" id="btn-qris" disabled onclick="openPay('qris')">
+      <span class="pay-icon icon-qris"><img src="icon-qris.png" alt="QRIS" /></span> QRIS
+    </button>
+  </div>
+  <div class="hint" id="hint">Pilih salah satu paket di atas terlebih dahulu</div>
+
+  <!-- proof of payment -->
+  <div class="proof-box">
+    <p>SILAHKAN LAKUKAN PEMBAYARAN, JIKA SUDAH BERHASIL BISA SEND BUKTI MELALUI WHATSAPP.</p>
+    <a class="btn btn-wa" id="wa-link" href="#" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.34 5L2 22l5.14-1.35A9.96 9.96 0 0012.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15c-1.6 0-3.15-.43-4.5-1.24l-.32-.19-3.05.8.81-2.97-.21-.31A8.15 8.15 0 013.85 12c0-4.5 3.66-8.15 8.15-8.15S20.15 7.5 20.15 12s-3.65 8.15-8.11 8.15zm4.48-6.1c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.78.95-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.42-.55-.42-.14-.01-.31-.01-.47-.01-.16 0-.43.06-.66.31-.22.24-.87.85-.87 2.08 0 1.23.89 2.42 1.02 2.58.12.16 1.75 2.68 4.25 3.75.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
+      SEND BUKTI PEMBAYARAN
+    </a>
+  </div>
+
+  <div class="top-link">©2025 Siexther ♥ Made By <a href="loaderr.html">Hann.Siexther</a></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="modal-title">DANA</span>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+
+    <div class="modal-amount">Total pembayaran<b id="modal-total">Rp 0</b></div>
+
+    <div class="pay-detail" id="modal-number-wrap">
+      <div>
+        <span id="modal-number-label">Nomor Tujuan</span>
+        <b id="modal-number">081211291620</b>
+      </div>
+      <button class="copy-btn" onclick="copyNumber()">SALIN</button>
+    </div>
+
+    <div class="qris-img-wrap" id="modal-qris-wrap" style="display:none;">
+      <img src="qris.jpg" alt="QRIS SIEXTHER" />
+    </div>
+
+    <div class="modal-note">Pastikan nominal transfer sesuai, lalu kirim bukti pembayaran melalui tombol WhatsApp di halaman utama.</div>
+  </div>
+</div>
+
+<script>
+  const rupiah = n => 'Rp ' + n.toLocaleString('id-ID');
+  const waNumber = '6283121743250';
+
+  let selected = null;
+  let toastTimer = null;
+
+  function showToast(name, status, price) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-text').innerHTML = '<b>' + name + '</b> (' + status + ') — ' + rupiah(price) + ' dipilih';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  document.querySelectorAll('.pkg-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+
+      selected = {
+        name: card.dataset.name,
+        price: parseInt(card.dataset.price, 10),
+        status: card.dataset.status,
+      };
+
+      ['btn-dana', 'btn-gopay', 'btn-qris'].forEach(id => document.getElementById(id).disabled = false);
+      document.getElementById('hint').textContent = 'Pilih metode pembayaran untuk melihat detail';
+
+      showToast(selected.name, selected.status, selected.price);
+      updateWaLink();
+    });
+  });
+
+  function updateWaLink() {
+    const link = document.getElementById('wa-link');
+    let text = 'Hai, saya telah melakukan pembayaran VIP. berikut bukti transfer nya';
+    if (selected) {
+      text = 'Hai, saya telah melakukan pembayaran VIP paket ' + selected.name + ' (' + selected.status + ') sebesar ' + rupiah(selected.price) + '. berikut bukti transfer nya';
+    }
+    link.href = 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(text);
+  }
+  updateWaLink();
+
+  const PAY_DETAILS = {
+    dana:  { title: 'DANA',  numberLabel: 'Nomor DANA',  number: '081211291620', showQris: false },
+    gopay: { title: 'GOPAY', numberLabel: 'Nomor GoPay', number: '081211291620', showQris: false },
+    qris:  { title: 'QRIS',  numberLabel: '',            number: '',            showQris: true  },
+  };
+
+  function openPay(method) {
+    if (!selected) return;
+    const d = PAY_DETAILS[method];
+
+    document.getElementById('modal-title').textContent = d.title;
+    document.getElementById('modal-total').textContent = rupiah(selected.price);
+
+    const numberWrap = document.getElementById('modal-number-wrap');
+    const qrisWrap = document.getElementById('modal-qris-wrap');
+
+    if (d.showQris) {
+      numberWrap.style.display = 'none';
+      qrisWrap.style.display = 'block';
+    } else {
+      numberWrap.style.display = 'flex';
+      qrisWrap.style.display = 'none';
+      document.getElementById('modal-number-label').textContent = d.numberLabel;
+      document.getElementById('modal-number').textContent = d.number;
+    }
+
+    document.getElementById('modal-overlay').classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('show');
+  }
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target.id === 'modal-overlay') closeModal();
+  });
+
+  function copyNumber() {
+    const num = document.getElementById('modal-number').textContent;
+    navigator.clipboard.writeText(num).then(() => {
+      const btn = event.target;
+      const old = btn.textContent;
+      btn.textContent = 'TERSALIN';
+      setTimeout(() => btn.textContent = old, 1200);
+    });
+  }
+</script>
+</body>
+</html>
