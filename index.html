@@ -168,14 +168,18 @@
   .pay-btn:hover { border-color: #4682ff70; }
   .pay-btn:active { transform: scale(.97); }
   .pay-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* ---- FIXED: unified icon box for DANA / GOPAY / QRIS ---- */
   .pay-icon {
-    width: 38px; height: 38px; border-radius: 10px;
+    width: 44px; height: 44px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    overflow: hidden; background: #ffffff10; border: 1px solid var(--border);
+    overflow: hidden; background: #ffffff; border: 1px solid var(--border);
+    padding: 6px;
   }
-  .pay-icon img { width: 100%; height: 100%; object-fit: cover; }
-  .icon-qris { background: #0a0a12; padding: 6px; }
-  .icon-qris img { object-fit: contain; }
+  .pay-icon img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+  }
 
   .hint {
     text-align: center; font-family: var(--mono); font-size: 11px;
@@ -314,7 +318,7 @@
       <span class="pay-icon"><img src="icon-gopay.png" alt="GOPAY" /></span> GOPAY
     </button>
     <button class="pay-btn" id="btn-qris" disabled onclick="openPay('qris')">
-      <span class="pay-icon icon-qris"><img src="icon-qris.png" alt="QRIS" /></span> QRIS
+      <span class="pay-icon"><img src="icon-qris.png" alt="QRIS" /></span> QRIS
     </button>
   </div>
   <div class="hint" id="hint">Pilih salah satu paket di atas terlebih dahulu</div>
