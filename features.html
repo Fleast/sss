@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>SIEXTHER</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118cc;
+      --border: #2a2a44;
+      --border-active: #4682FF;
+      --text: #e8e8f0;
+      --muted: #8888aa;
+
+      /* PRIMARY COLOR TETAP */
+      --accent: #4682FF;
+
+      --accent-dim: #4682FF20;
+      --accent-glow: #4682FF55;
+
+      --success: #6af7a8;
+
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --display: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: rgb(20, 20, 30);
+      color: var(--text);
+      font-family: var(--sans);
+
+      min-height: 100vh;
+
+      padding: 24px 16px;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+
+      width: 100%;
+      max-width: 520px;
+
+      margin: 0 auto;
+    }
+
+
+    /* =========================
+       LOGO
+    ========================= */
+
+    .logo {
+      text-align: center;
+
+      margin-bottom: 10px;
+    }
+
+    .logo-text {
+      display: inline-block;
+
+      font-family: var(--display);
+
+      font-size: 32px;
+      font-weight: 900;
+
+      letter-spacing: 0.14em;
+
+      background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        var(--accent) 30%,
+        var(--accent) 60%,
+        #ffffff 100%
+      );
+
+      background-size: 300% 100%;
+      background-position: 200% 0;
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+
+      filter:
+        drop-shadow(
+          0 0 18px var(--accent-glow)
+        );
+
+      animation:
+        titleSweep 4s ease-in-out infinite alternate;
+    }
+
+
+    @keyframes titleSweep {
+
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -100% 0;
+      }
+
+    }
+
+
+    .logo-sub {
+
+      font-family: var(--mono);
+
+      font-size: 9px;
+
+      color: var(--muted);
+
+      margin-top: 8px;
+
+      letter-spacing: 0.16em;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =========================
+       SYSTEM STATUS
+    ========================= */
+
+    .top-status {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      margin-bottom: 14px;
+
+      font-family: var(--mono);
+
+      font-size: 9px;
+
+      color: var(--muted);
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+    }
+
+
+    .top-status-dot {
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: var(--success);
+
+      box-shadow:
+        0 0 7px rgba(
+          106,
+          247,
+          168,
+          0.6
+        );
+
+      animation:
+        activePulse 1.5s ease-in-out infinite;
+    }
+
+
+    /* =========================
+       MAIN CARD
+    ========================= */
+
+    .card {
+
+      background: var(--surface);
+
+      backdrop-filter: blur(10px);
+
+      -webkit-backdrop-filter: blur(10px);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 16px;
+
+      padding: 10px;
+
+      box-shadow:
+        0 8px 40px
+        rgba(0, 0, 0, 0.5);
+    }
+
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    .section {
+
+      margin-bottom: 18px;
+    }
+
+
+    .section:last-child {
+
+      margin-bottom: 0;
+    }
+
+
+    .section-title {
+
+      padding:
+        12px 10px 8px;
+
+      font-family: var(--display);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      color: var(--muted);
+
+      letter-spacing: 0.18em;
+    }
+
+
+    /* =========================
+       FEATURE LIST
+    ========================= */
+
+    .feature {
+
+      width: 100%;
+
+      min-height: 48px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 12px;
+
+      margin-bottom: 5px;
+
+      border:
+        1px solid transparent;
+
+      border-radius: 10px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.015
+        );
+
+      cursor: default;
+
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+
+    .feature:last-child {
+
+      margin-bottom: 0;
+    }
+
+
+    .feature:hover {
+
+      background:
+        rgba(
+          70,
+          130,
+          255,
+          0.055
+        );
+
+      border-color:
+        rgba(
+          70,
+          130,
+          255,
+          0.20
+        );
+    }
+
+
+    .feature-name {
+
+      min-width: 0;
+
+      font-family: var(--sans);
+
+      font-size: 12px;
+
+      font-weight: 500;
+
+      color: var(--text);
+
+      letter-spacing: 0.025em;
+
+      line-height: 1.4;
+    }
+
+
+    /* =========================
+       ACTIVE INDICATOR
+    ========================= */
+
+    .feature-status {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      flex-shrink: 0;
+
+      margin-left: 12px;
+    }
+
+
+    .status-text {
+
+      font-family: var(--mono);
+
+      font-size: 8px;
+
+      font-weight: 500;
+
+      color: var(--accent);
+
+      letter-spacing: 0.08em;
+    }
+
+
+    .status-dot {
+
+      position: relative;
+
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--accent);
+
+      box-shadow:
+        0 0 5px var(--accent),
+        0 0 12px var(--accent-glow);
+
+      animation:
+        activePulse 1.5s ease-in-out infinite;
+    }
+
+
+    @keyframes activePulse {
+
+      0%,
+      100% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+        box-shadow:
+          0 0 5px var(--accent),
+          0 0 12px var(--accent-glow);
+      }
+
+
+      50% {
+
+        transform: scale(1.35);
+
+        opacity: 0.65;
+
+        box-shadow:
+          0 0 8px var(--accent),
+          0 0 18px var(--accent-glow);
+      }
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+.footer {
+  text-align: center;
+
+  margin-top: 18px;
+
+  font-family: var(--sans);
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  color: var(--muted);
+
+  letter-spacing: normal;
+}
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 400px) {
+
+      body {
+
+        padding:
+          18px 12px;
+      }
+
+
+      .logo-text {
+
+        font-size: 28px;
+      }
+
+
+      .feature {
+
+        min-height: 46px;
+
+        padding:
+          11px 10px;
+      }
+
+
+      .feature-name {
+
+        font-size: 11px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="wrap">
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="logo">
+
+      <div class="logo-text">
+        SIEXTHER
+      </div>
+
+      <div class="logo-sub">
+        FEATURE PANEL
+      </div>
+
+    </div>
+
+
+    <div class="top-status">
+
+      <span class="top-status-dot"></span>
+
+      <span>
+        SYSTEM ONLINE
+      </span>
+
+    </div>
+
+
+    <!-- =========================
+         FEATURE CARD
+    ========================= -->
+
+    <div class="card">
+
+
+      <!-- =========================
+           HOME
+      ========================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          H O M E
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            TOUCH FLING
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">
+              ACTIVE
+            </span>
+
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            INVISIBILITY
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            GOD MODE
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            INFINITE JUMP
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            NO CLIP
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            AIRWALK
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            JERK
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            XRAY
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            VOICE CHAT BYPASS
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER AUTO WALK
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER AUTO TELEPORT
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER FLY
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER FLY V2
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER GLITCH
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER GLITCH V2
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER ANIMATED
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER ANIMATED V2
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER EMOTE
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           FEATURES
+      ========================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          F E A T U R E S
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            ANTI-DC &amp; PING BOOSTER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            WALKSPEED SPEED
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER INJECTION
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER TROLL
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER KIMCOHI
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER ANTI STAFF
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER SHADERS
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER FLASHLIGHT
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER CROSSHAIR
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER SPAM
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER CHARME
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER VIOLENCE DISTRICT
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER TALL MAN
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            ESP PLAYER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            FAKE DONATE
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            TRANSLATE
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER AURA
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER AURA FAST
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           CHAOTIC
+      ========================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          C H A O T I C
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER FLING
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER BROKEN
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER CHAOTIC
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER PART CONTROLLER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER BRING
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER BRING V2
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER TORNADO
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER SHAKE
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER RING
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           SERVER
+      ========================= -->
+
+      <div class="section">
+
+        <div class="section-title">
+          S E R V E R
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            ANTI LAG &amp; FPS BOOSTER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            ULTRA GRAPHICS
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            FREECAM
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SPECTATE PLAYER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            TELEPORT PLAYER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            ALL SERVER TELEPORT
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SKY CHANGER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SCAN AUDIO
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            HIDE DISPLAYNAME
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            SIEXTHER UNC CHECKER
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+
+        <div class="feature">
+          <span class="feature-name">
+            DEX EXPLORE
+          </span>
+
+          <div class="feature-status">
+            <span class="status-text">ACTIVE</span>
+            <span class="status-dot"></span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="footer">
+      ©2026 SIEXTHER ♥ Made By Hann.Siexther
+    </div>
+
+  </div>
+
+</body>
+</html>

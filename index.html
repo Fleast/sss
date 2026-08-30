@@ -10,6 +10,13 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  @font-face {
+    font-family: 'TTTW';
+    src: url('tttw.ttf') format('truetype');
+    font-weight: 400 900;
+    font-display: swap;
+  }
+
   :root {
     --bg: #0a0a0f;
     --surface: #111118cc;
@@ -49,7 +56,7 @@
   /* ---- logo (kept identical to login) ---- */
   .logo { text-align: center; margin-bottom: 34px; }
   .logo-text {
-    font-family: var(--display);
+    font-family: 'TTTW', var(--display), sans-serif;
     font-size: 34px;
     font-weight: 900;
     letter-spacing: 0.14em;
@@ -125,7 +132,7 @@
     padding: 3px 8px; border-radius: 20px; text-transform: uppercase;
   }
   .pkg-price {
-    font-family: var(--ios); font-weight: 700; font-size: 21px; letter-spacing: -0.01em;
+    font-family: 'TTTW', var(--display), sans-serif; font-weight: 700; font-size: 20px; letter-spacing: 0.04em;
     color: #fff; white-space: nowrap;
   }
 
@@ -210,6 +217,28 @@
   }
   .btn-wa:hover { opacity: .92; }
 
+  .top-features {
+    display: block;
+    margin: 22px 0 0;
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    text-decoration: none;
+    transition: border-color .18s;
+  }
+  .top-features:hover { border-color: #4682ff70; }
+  .top-features .tf-title {
+    font-family: 'TTTW', var(--display), sans-serif; font-size: 15px; font-weight: 700;
+    letter-spacing: .06em; color: #fff;
+  }
+  .top-features .tf-sub {
+    display: block; margin-top: 5px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--accent);
+  }
+
   .top-link { text-align: center; font-size: 12px; color: var(--muted); margin-top: 24px; }
   .top-link a { color: var(--accent); text-decoration: none; opacity: .9; }
 
@@ -236,7 +265,7 @@
   .modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; }
 
   .modal-amount { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 4px; letter-spacing: .05em; text-transform: uppercase; }
-  .modal-amount b { display: block; font-family: var(--ios); font-size: 24px; font-weight: 700; color: #fff; margin-top: 4px; letter-spacing: -0.01em; }
+  .modal-amount b { display: block; font-family: 'TTTW', var(--display), sans-serif; font-size: 22px; font-weight: 700; color: #fff; margin-top: 4px; letter-spacing: 0.03em; }
 
   .pay-detail {
     margin-top: 18px;
@@ -275,8 +304,13 @@
     <div class="logo-sub">VIP PURCHASE</div>
   </div>
 
+  <a class="top-features" href="features.html">
+    <span class="tf-title">SIEXTHER VIP</span>
+    <span class="tf-sub">Klik disini untuk melihat daftar fitur</span>
+  </a>
+
   <!-- PAYMENT 1 -->
-  <div class="section-head"><span>PRICE LIST</span></div>
+  <div class="section-head"><span>DAFTAR HARGA</span></div>
   <div class="pkg-grid" data-group="1">
     <div class="pkg-card" data-usn="1" data-change="1" data-price="25000" data-status="10 DAYS" data-name="USN Max 1 · Change Max 1">
       <div class="pkg-radio"></div>
@@ -298,10 +332,10 @@
   </div>
 
   <div class="pkg-grid" data-group="2" style="margin-top: 12px;">
-    <div class="pkg-card" data-usn="8" data-change="10" data-price="100000" data-status="LIFETIME" data-name="USN Max 8 · Change 10">
+    <div class="pkg-card" data-usn="5" data-change="6" data-price="100000" data-status="LIFETIME" data-name="USN Max 5 · Change Max 6">
       <div class="pkg-radio"></div>
       <div class="pkg-info">
-        <span class="pkg-specs"><span>USN MAX <b>8</b></span><span>CHANGE <b>10</b></span></span>
+        <span class="pkg-specs"><span>USN MAX <b>5</b></span><span>CHANGE <b>6</b></span></span>
         <span class="pkg-status">Lifetime</span>
       </div>
       <div class="pkg-price">100K</div>
